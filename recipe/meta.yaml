@@ -1,3 +1,4 @@
+{% set python_min = '3.10' %}
 {% set name = "kedro-pack" %}
 {% set version = "0.18.12.1" %}
 {% set module_name = "kedro_pack" %}
@@ -8,24 +9,23 @@ package:
 
 build:
   noarch: python
-  number: 0
+  number: 1
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ module_name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ module_name }}-{{ version }}.tar.gz
   sha256: e8d0692702f0e7c972f92a723bb5e60812f259d390c40fa1f83bad01459577dd
 
 build:
-  number: 0
-  noarch: python
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python >=3.10,<3.11
+    - python {{ python_min }}
     - poetry-core >=1.0.0
     - pip
   run:
-    - python >=3.10,<3.11
+    - python >={{ python_min }},<3.11
     - kedro ==0.18.12
     - kedro-datasets ==1.6.0
     - kedro-airflow ==0.6.0
@@ -44,6 +44,7 @@ test:
     - kedro_light
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/millsks/kedro-pack
